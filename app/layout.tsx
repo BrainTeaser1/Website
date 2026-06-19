@@ -6,6 +6,7 @@ import { GlobalBackground } from "@/components/background/global-background";
 import { LiquidGlassFilter } from "@/components/background/liquid-glass-filter";
 import { SiteNav } from "@/components/layout/site-nav";
 import { Footer } from "@/components/layout/footer";
+import { ScrollProgress } from "@/components/effects/scroll-progress";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", display: "swap" });
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="overflow-x-hidden font-sans text-ink antialiased">
         <GlobalBackground />
         <LiquidGlassFilter />
+        <ScrollProgress />
         <SiteNav />
         <main id="top" className="relative">
           {children}

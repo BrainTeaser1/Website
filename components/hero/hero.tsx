@@ -5,6 +5,7 @@ import { Socials } from "@/components/ui/socials";
 import { MetricStat } from "@/components/ui/stat";
 import { CloudTopology } from "@/components/hero/cloud-topology";
 import { ParticleWords } from "@/components/hero/particle-name";
+import { Parallax } from "@/components/effects/parallax";
 
 const heroMetrics = [
   { label: "Clouds", value: "3" },
@@ -70,7 +71,9 @@ export function Hero() {
 
           {/* right centerpiece */}
           <Reveal className="relative">
-            <CloudTopology />
+            <Parallax speed={28}>
+              <CloudTopology />
+            </Parallax>
             <div className="mt-4 grid grid-cols-3 gap-3">
               {heroMetrics.map((m) => (
                 <MetricStat key={m.label} {...m} />

@@ -1,49 +1,67 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
-import { cn } from "@/lib/utils";
+import { type ReactNode } from "react";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
+
+type RevealTag = "div" | "section" | "article" | "li" | "span";
+type Direction = "up" | "down" | "left" | "right";
 
 interface RevealProps {
   children: ReactNode;
   className?: string;
-  /** stagger index — multiplies the transition delay */
+  /** stagger position — multiplies the delay */
   index?: number;
-  as?: "div" | "section" | "article" | "li";
+  as?: RevealTag;
+  direction?: Direction;
 }
 
-export function Reveal({ children, className, index = 0, as = "div" }: RevealProps) {
-  const ref = useRef<HTMLElement>(null);
+const OFFSET = 26;
+const offsetFor = (d: Direction) => ({
+  up: { y: OFFSET },
+  down: { y: -OFFSET },
+  left: { x: OFFSET },
+  right: { x: -OFFSET },
+}[d]);
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      el.classList.add("in");
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            (e.target as HTMLElement).classList.add("in");
-            io.unobserve(e.target);
-          }
-        });
+/**
+ * Unified scroll-reveal: spring-based, directional, staggered via `index`.
+ * Animates once when it enters view. No-op (content visible) under reduced-motion.
+ * API matches the previous IntersectionObserver version.
+ */
+export function Reveal({ children, className, index = 0, as = "div", direction = "up" }: RevealProps) {
+  const reduce = useReducedMotion();
+  const MotionTag = motion[as];
+
+  if (reduce) {
+    const Tag = as as any;
+    return <Tag className={className}>{children}</Tag>;
+  }
+
+  const variants: Variants = {
+    hidden: { opacity: 0, ...offsetFor(direction) },
+    visible: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 90,
+        damping: 20,
+        mass: 0.6,
+        delay: Math.min(index % 6, 5) * 0.07,
       },
-      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
+    },
+  };
 
-  const Tag = as as any;
   return (
-    <Tag
-      ref={ref}
-      className={cn("reveal", className)}
-      style={{ transitionDelay: `${Math.min(index % 6, 5) * 60}ms` }}
+    <MotionTag
+      className={className}
+      variants={variants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "0px 0px -60px 0px" }}
     >
       {children}
-    </Tag>
+    </MotionTag>
   );
 }

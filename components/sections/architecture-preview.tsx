@@ -4,6 +4,7 @@ import { Section, SectionHeading } from "@/components/primitives/section";
 import { Reveal } from "@/components/effects/reveal";
 import { FeaturedBlueprint } from "@/components/architecture/featured-blueprint";
 import { BlueprintCard } from "@/components/architecture/blueprint-card";
+import { ScrollTilt } from "@/components/effects/scroll-tilt";
 import { getFeaturedBlueprints } from "@/lib/content";
 
 export function ArchitecturePreview() {
@@ -36,7 +37,9 @@ export function ArchitecturePreview() {
 
         <div className="mt-12 grid items-stretch gap-5 lg:grid-cols-12">
           <Reveal className="lg:col-span-8">
-            <FeaturedBlueprint blueprint={featured} />
+            <ScrollTilt>
+              <FeaturedBlueprint blueprint={featured} />
+            </ScrollTilt>
           </Reveal>
           <div className="flex flex-col gap-5 lg:col-span-4">
             {rest.map((b, i) => (
