@@ -299,8 +299,14 @@ body {
   .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
   .eshape { opacity: 1 !important; animation: none !important; }
   .bp-line, .data-dot, .flow-line, .eshape,
-  .animate-floaty, .animate-pulseGlow, .animate-gridpan, .spotlight {
+  .animate-floaty, .animate-pulseGlow, .animate-gridpan, .spotlight,
+  .orb-ring, .orb-ring-rev {
     animation: none !important;
   }
   .rotator .word { transition: none; }
 }
+
+/* ===================== BRAND ORB ===================== */
+@keyframes orbspin { to { transform: rotate(360deg); } }
+.orb-ring { animation: orbspin 42s linear infinite; }
+.orb-ring-rev { animation: orbspin 30s linear infinite reverse; }

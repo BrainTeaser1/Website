@@ -193,7 +193,7 @@ export function ParticleWords({
 
   if (!enabled) {
     return (
-      <div className={cn("flex flex-wrap items-center gap-x-3 text-4xl font-extrabold sm:text-5xl", className)}>
+      <div className={cn("flex flex-wrap items-center justify-center gap-x-3 text-4xl font-extrabold sm:text-5xl", className)}>
         {words.slice(0, 3).map((w) => (
           <span key={w} className="accent-gradient">
             {w}.

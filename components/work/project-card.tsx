@@ -7,8 +7,8 @@ import { Tag } from "@/components/ui/chip";
 export function ProjectCard({ project, index }: { project: CaseStudy; index?: number }) {
   return (
     <article className="card card-hover group relative flex flex-col overflow-hidden rounded-3xl">
-      {/* full-card overlay link (siblings stay clickable via z-10) */}
-      <Link href={`/work/${project.slug}`} className="absolute inset-0 z-0" aria-label={project.title} />
+      {/* full-card overlay link — must sit ABOVE the card body so clicks land */}
+      <Link href={`/work/${project.slug}`} className="absolute inset-0 z-10" aria-label={project.title} />
 
       {/* preview header */}
       <div className="relative h-40 overflow-hidden border-b border-line/60 bg-surface2">
@@ -48,7 +48,7 @@ export function ProjectCard({ project, index }: { project: CaseStudy; index?: nu
               target="_blank"
               rel="noreferrer"
               aria-label={`${project.title} on GitHub`}
-              className="relative z-10 text-sub transition hover:text-ink"
+              className="relative z-20 text-sub transition hover:text-ink"
             >
               <Github className="h-[18px] w-[18px]" />
             </a>
