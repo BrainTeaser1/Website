@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(taskkill //F //IM node.exe)",
+      "Bash(ls node_modules/three)",
+      "Bash(ls node_modules/@types/three)"
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+
+# production
+/build
+
+# env
+.env
+.env*.local
+
+# vercel
+.vercel
+
+# logs / os
+*.log
+.DS_Store
+
+# the full personal résumé (has phone + location) — never publish; public/resume.pdf is the scrubbed copy
+/My_Resume.pdf
+
+# scratch / dev artifacts
+/shot*.js
+/*.png
+/index.html
