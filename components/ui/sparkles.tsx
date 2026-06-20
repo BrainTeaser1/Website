@@ -34,6 +34,7 @@ export function Sparkles({
     if (!ctx) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
     let raf = 0;
     let w = 0,
       h = 0,
@@ -58,7 +59,7 @@ export function Sparkles({
     };
 
     const resize = () => {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.5 : 2);
       const [cw, ch] = dims();
       w = canvas.width = Math.floor(cw * dpr);
       h = canvas.height = Math.floor(ch * dpr);
@@ -98,7 +99,7 @@ export function Sparkles({
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fillStyle = p.c;
-        ctx.shadowBlur = 6 * dpr;
+        ctx.shadowBlur = (isMobile ? 3 : 6) * dpr;
         ctx.shadowColor = p.c;
         ctx.fill();
       }

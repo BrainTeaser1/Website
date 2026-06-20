@@ -19,10 +19,13 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
     if (!container) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // Phones: keep the effect, but lighten it — fewer points, DPR 1, no MSAA,
+    // ~30fps. Desktop is unchanged.
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
 
     const SEPARATION = 150;
-    const AMOUNTX = 40;
-    const AMOUNTY = 50;
+    const AMOUNTX = isMobile ? 24 : 40;
+    const AMOUNTY = isMobile ? 30 : 50;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 10000);
@@ -33,11 +36,11 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
     // never let a failed context crash the page.
     let renderer: THREE.WebGLRenderer;
     try {
-      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: "high-performance" });
+      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: !isMobile, powerPreference: "high-performance" });
     } catch {
       return;
     }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1 : 1.5));
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x000000, 0);
     container.appendChild(renderer.domElement);
@@ -64,7 +67,7 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
     geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
 
     const material = new THREE.PointsMaterial({
-      size: 7,
+      size: isMobile ? 9 : 7, // sparser grid → slightly larger dots keep the visual density
       vertexColors: true,
       transparent: true,
       opacity: 0.9,
@@ -90,10 +93,17 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
       renderer.render(scene, camera);
     };
 
-    const animate = () => {
+    // ~30fps cap on mobile (skip alternate frames); count steps faster so the
+    // wave travels at the same visual speed despite fewer frames.
+    const minDelta = isMobile ? 1000 / 30 : 0;
+    const step = isMobile ? 0.2 : 0.1;
+    let lastT = 0;
+    const animate = (t = 0) => {
       animationId = requestAnimationFrame(animate);
+      if (t - lastT < minDelta) return;
+      lastT = t;
       renderFrame();
-      count += 0.1;
+      count += step;
     };
 
     const onResize = () => {
