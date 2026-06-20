@@ -37,9 +37,9 @@ export default function ContactPage() {
                 <span className="grid h-11 w-11 place-items-center rounded-xl bg-accent/15 text-accent">
                   <c.Icon className="h-5 w-5" />
                 </span>
-                <div>
+                <div className="min-w-0">
                   <div className="font-mono text-[11px] uppercase tracking-wider text-sub">{c.label}</div>
-                  <div className="font-semibold">{c.value}</div>
+                  <div className="font-semibold break-words">{c.value}</div>
                 </div>
               </a>
             </Reveal>

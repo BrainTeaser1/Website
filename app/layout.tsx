@@ -44,7 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <LiquidGlassFilter />
         <ScrollProgress />
         <SiteNav />
-        <main id="top" className="relative">
+        <main id="top" className="relative overflow-x-clip">
           {children}
         </main>
         <Footer />

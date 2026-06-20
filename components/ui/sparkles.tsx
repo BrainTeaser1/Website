@@ -110,14 +110,26 @@ export function Sparkles({
 
     resize();
     window.addEventListener("resize", resize);
+    // Re-measure when the sized element's box changes (layout settle, route
+    // change, font swap) — the one-shot measure could otherwise latch a stale
+    // width and push the page wider than the viewport.
+    let ro: ResizeObserver | undefined;
+    const target = parent ? canvas.parentElement : null;
+    if (target && "ResizeObserver" in window) {
+      ro = new ResizeObserver(() => resize());
+      ro.observe(target);
+    }
     if (reduce) frame();
     else raf = requestAnimationFrame(frame);
 
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
+      ro?.disconnect();
     };
   }, [colors, divisor, cap, maxR, parent]);
 
-  return <canvas ref={ref} aria-hidden className={cn("pointer-events-none", className)} />;
+  // block + max-w/h-full: a decorative canvas must never widen the page even if
+  // its measured px width is briefly stale.
+  return <canvas ref={ref} aria-hidden className={cn("pointer-events-none block max-w-full max-h-full", className)} />;
 }

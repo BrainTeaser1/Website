@@ -140,5 +140,7 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
     };
   }, []);
 
-  return <div ref={containerRef} aria-hidden className={cn("pointer-events-none fixed inset-0", className)} {...props} />;
+  // overflow-hidden: the WebGL canvas is sized in px from window dimensions and
+  // must never leak past the viewport and widen the page.
+  return <div ref={containerRef} aria-hidden className={cn("pointer-events-none fixed inset-0 overflow-hidden", className)} {...props} />;
 }
