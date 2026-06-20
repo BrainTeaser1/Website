@@ -337,7 +337,8 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: shimmer 7s linear infinite;
+  /* static gradient — the moving background-position repainted the text every
+     frame in the hero; the gradient itself reads fine without the motion */
 }
 @keyframes shimmer { to { background-position: 200% center; } }
 

@@ -4,13 +4,13 @@ import { Reveal } from "@/components/effects/reveal";
 import { LiquidButton } from "@/components/ui/liquid-button";
 import { Socials } from "@/components/ui/socials";
 import { DisciplineGlitch } from "@/components/hero/discipline-glitch";
-import { Aurora } from "@/components/effects/aurora";
 
 export function Hero() {
   return (
     <header className="relative flex min-h-[88svh] items-center justify-center overflow-hidden pb-16 pt-24 sm:pb-20 sm:pt-28">
-      {/* aurora light field behind the name */}
-      <Aurora />
+      {/* ambient glow comes from the global background orbs; no extra hero-only
+          blurred layers here — three blurred blobs re-composited over the live
+          WebGL canvas every frame were the hero's lag source. */}
       <div className="absolute inset-0 grid-bg grid-fade" />
 
       <div className="container-page relative">
