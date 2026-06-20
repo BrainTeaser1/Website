@@ -1,5 +1,6 @@
 import { Sparkles } from "@/components/ui/sparkles";
 import { DottedSurface } from "@/components/background/dotted-surface";
+import { DeferredLayer } from "@/components/background/deferred-background";
 
 /**
  * Fixed, full-page ambient layer mounted ONCE in the root layout (outside
@@ -9,8 +10,11 @@ import { DottedSurface } from "@/components/background/dotted-surface";
 export function GlobalBackground() {
   return (
     <div aria-hidden className="fixed inset-0 -z-20 overflow-hidden pointer-events-none">
-      {/* 3D depth layer */}
-      <DottedSurface className="-z-10 opacity-[0.55]" />
+      {/* 3D depth layer — deferred past first paint so its WebGL init doesn't
+          jank the initial load; fades in once the page is settled */}
+      <DeferredLayer>
+        <DottedSurface className="-z-10 opacity-[0.55]" />
+      </DeferredLayer>
       {/* faint architectural grid */}
       <div
         className="absolute inset-0 animate-gridpan"
@@ -28,7 +32,9 @@ export function GlobalBackground() {
       <div className="glow absolute top-[120%] -right-[8%] h-[420px] w-[480px] rounded-full bg-cyan/10" />
       <div className="glow absolute top-[185%] left-[38%] h-[460px] w-[560px] rounded-full bg-accent2/12" />
       {/* sparkles — lightened so it complements rather than competes with the 3D layer */}
-      <Sparkles className="absolute inset-0 h-full w-full" divisor={9000} cap={200} maxR={1.2} />
+      <DeferredLayer>
+        <Sparkles className="absolute inset-0 h-full w-full" divisor={9000} cap={200} maxR={1.2} />
+      </DeferredLayer>
     </div>
   );
 }

@@ -350,7 +350,17 @@ body {
 }
 .aurora-blob { animation: aurora-drift 22s ease-in-out infinite; will-change: transform; }
 
+/* deferred background layers ease in after the page has settled */
+@keyframes bgFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.bg-fade-in {
+  animation: bgFadeIn 0.8s ease-out both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .shimmer-text { animation: none !important; }
   .aurora-blob { animation: none !important; }
+  .bg-fade-in { animation: none !important; }
 }
