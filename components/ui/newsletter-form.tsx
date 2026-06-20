@@ -39,7 +39,7 @@ export function NewsletterForm({ endpoint }: { endpoint?: string }) {
         onChange={(e) => setEmail(e.target.value)}
         placeholder="you@company.com"
         aria-label="Email address"
-        className="min-w-0 flex-1 rounded-full border border-line bg-surface2 px-4 py-2.5 text-sm text-ink outline-none transition focus:border-accent/60"
+        className="min-w-0 flex-1 rounded-full border border-line bg-surface2 px-4 py-2.5 text-base text-ink outline-none transition focus:border-accent/60 sm:text-sm"
       />
       <button
         type="submit"

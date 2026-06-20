@@ -26,6 +26,16 @@ export function CommandMenu({ open, setOpen }: { open: boolean; setOpen: (v: boo
     return () => document.removeEventListener("keydown", onKey);
   }, [open, setOpen]);
 
+  // lock body scroll while the dialog is open
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
   const go = (href: string) => {
     setOpen(false);
     router.push(href);
@@ -35,7 +45,7 @@ export function CommandMenu({ open, setOpen }: { open: boolean; setOpen: (v: boo
 
   return (
     <div
-      className="fixed inset-0 z-[100] grid place-items-start justify-center bg-black/60 pt-[18vh] backdrop-blur-sm"
+      className="fixed inset-0 z-[100] grid place-items-start justify-center bg-black/60 pt-[max(18vh,env(safe-area-inset-top))] backdrop-blur-sm"
       onClick={() => setOpen(false)}
     >
       <Command
@@ -48,7 +58,7 @@ export function CommandMenu({ open, setOpen }: { open: boolean; setOpen: (v: boo
           <Command.Input
             autoFocus
             placeholder="Jump to…"
-            className="w-full bg-transparent py-3.5 text-sm text-ink outline-none placeholder:text-sub"
+            className="w-full bg-transparent py-3.5 text-base text-ink outline-none placeholder:text-sub sm:text-sm"
           />
         </div>
         <Command.List className="max-h-[320px] overflow-y-auto p-2">
