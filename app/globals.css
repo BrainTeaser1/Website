@@ -77,9 +77,6 @@ body {
     .glow {
       filter: blur(60px);
     }
-    .aurora-blob {
-      filter: blur(42px) !important;
-    }
   }
   .text-gradient {
     background: linear-gradient(120deg, #fff 0%, #8da8ff 42%, #a855f7 100%);
@@ -340,19 +337,6 @@ body {
   /* static gradient — the moving background-position repainted the text every
      frame in the hero; the gradient itself reads fine without the motion */
 }
-@keyframes shimmer { to { background-position: 200% center; } }
-
-/* ===================== AURORA ===================== */
-/* translate-only: scaling a blurred layer forces a full re-raster of the blur
-   every frame (the hero's main lag source). Pure translate is a cheap GPU move. */
-@keyframes aurora-drift {
-  0%   { transform: translate(0, 0); }
-  33%  { transform: translate(6%, -4%); }
-  66%  { transform: translate(-5%, 5%); }
-  100% { transform: translate(0, 0); }
-}
-.aurora-blob { animation: aurora-drift 22s ease-in-out infinite; will-change: transform; }
-
 /* deferred background layers ease in after the page has settled */
 @keyframes bgFadeIn {
   from { opacity: 0; }
@@ -363,7 +347,5 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .shimmer-text { animation: none !important; }
-  .aurora-blob { animation: none !important; }
   .bg-fade-in { animation: none !important; }
 }

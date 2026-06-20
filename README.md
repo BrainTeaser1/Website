@@ -1,8 +1,8 @@
 # Krishna Shukla — Engineering Platform
 
 A personal engineering platform (not a portfolio template) for **Krishna Shukla**, AI & Cloud Engineer.
-Built as a premium, product-grade site with a royal-blue / violet identity, animated cloud-topology
-visuals, and a Git-based content system.
+Built as a premium, product-grade site with a royal-blue / violet identity, animated WebGL +
+architecture-diagram visuals, and a Git-based content system. **Live at [kr1shna.xyz](https://kr1shna.xyz).**
 
 ## Tech stack
 
@@ -30,7 +30,7 @@ app/            # routes: /, work, architecture, writing, about, now,
 components/     # ui, layout, hero, sections, effects, background, content cards
 content/        # typed content + data
   work.ts · architecture.ts · writing.ts
-  data/         # certifications, now, changelog, experience, skills
+  data/         # certifications, now, changelog, experience, skills, exploring, trajectory
 lib/
   content.ts    # SINGLE content-access seam (swap to MDX/DB here later)
   site.ts       # name, role, socials, nav
@@ -58,9 +58,11 @@ backend later is a one-file change. Set `status: "draft"` to hide an entry from 
   not claimed credentials.
 - Effects respect `prefers-reduced-motion`; most of the page is server-rendered with a few
   small client islands (background, nav, reveal, command menu).
-- `index.html` at the root is the original static design, kept for reference.
+- **Performance is a hard requirement** — heavy effects are deferred/throttled and gated by device.
+  See [`.claude/rules/performance.md`](.claude/rules/performance.md) and the `/perf-audit` skill.
 
 ## Deploy
 
-Optimized for **Vercel** (zero config). Update `url`, `email`, and `socials` in
-[`lib/site.ts`](lib/site.ts) before going live.
+**Live at [kr1shna.xyz](https://kr1shna.xyz)** on **Vercel** — every push to `main` auto-deploys.
+See [`DEPLOY.md`](DEPLOY.md) for the day-to-day update flow + DNS reference. Site config (`url`,
+`email`, `socials`) lives in [`lib/site.ts`](lib/site.ts).
