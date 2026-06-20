@@ -54,11 +54,21 @@ export function SiteNav() {
 
   useEffect(() => setMobileOpen(false), [pathname]);
 
+  // lock body scroll while the mobile drawer is open
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [mobileOpen]);
+
   return (
     <>
       <header
         className={cn(
-          "fixed inset-x-0 top-0 z-50 transition-all duration-300 nav-blur",
+          "fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top)] transition-all duration-300 nav-blur",
           scrolled && "nav-scrolled",
         )}
       >
@@ -121,7 +131,7 @@ export function SiteNav() {
               onClick={() => setMobileOpen((v) => !v)}
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileOpen}
-              className="chip grid h-9 w-9 place-items-center rounded-lg text-sub transition hover:text-ink lg:hidden"
+              className="chip grid h-10 w-10 place-items-center rounded-lg text-sub transition hover:text-ink lg:hidden"
             >
               {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </button>
@@ -155,6 +165,15 @@ export function SiteNav() {
           </div>
         )}
       </header>
+
+      {/* backdrop for the mobile drawer (below the header z-50, above the page) */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm lg:hidden"
+          aria-hidden
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
 
       <CommandMenu open={cmdOpen} setOpen={setCmdOpen} />
     </>

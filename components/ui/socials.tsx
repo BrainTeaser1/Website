@@ -18,7 +18,7 @@ export function Socials() {
           aria-label={label}
           target="_blank"
           rel="noreferrer"
-          className="chip grid h-9 w-9 place-items-center rounded-lg text-sub transition hover:text-ink"
+          className="chip grid h-10 w-10 place-items-center rounded-lg text-sub transition hover:text-ink active:scale-95"
         >
           <Icon className="h-4 w-4" />
         </a>
