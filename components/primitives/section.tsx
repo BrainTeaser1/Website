@@ -21,7 +21,7 @@ export function Section({
     <section
       id={id}
       className={cn(
-        "relative py-24 sm:py-28",
+        "relative py-16 sm:py-24 lg:py-28",
         flow === "top" && "flow-top overflow-hidden",
         flow === "bottom" && "flow-bottom overflow-hidden",
         flow === "both" && "flow-top flow-bottom overflow-hidden",
@@ -55,7 +55,7 @@ export function SectionHeading({
   return (
     <Reveal
       className={cn(
-        "mb-12 max-w-2xl",
+        "mb-8 max-w-2xl sm:mb-12",
         align === "center" && "mx-auto text-center",
         className,
       )}

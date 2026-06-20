@@ -13,8 +13,8 @@ export function PageHeader({
   children?: ReactNode;
 }) {
   return (
-    <header className="relative overflow-hidden pb-12 pt-36">
-      <div className="glow absolute -top-24 left-1/3 h-[320px] w-[560px] rounded-full bg-accent/20" />
+    <header className="relative overflow-hidden pb-12 pt-28 sm:pt-32 lg:pt-36">
+      <div className="glow absolute -top-24 left-1/3 h-[320px] w-[320px] rounded-full bg-accent/20 sm:w-[560px]" />
       <div className="absolute inset-0 grid-bg grid-fade" />
       <div className="container-page relative">
         <Reveal className="max-w-3xl">

@@ -8,7 +8,7 @@ import { Aurora } from "@/components/effects/aurora";
 
 export function Hero() {
   return (
-    <header className="relative flex min-h-[90vh] items-center justify-center overflow-hidden pb-20 pt-28">
+    <header className="relative flex min-h-[88svh] items-center justify-center overflow-hidden pb-16 pt-24 sm:pb-20 sm:pt-28">
       {/* aurora light field behind the name */}
       <Aurora />
       <div className="absolute inset-0 grid-bg grid-fade" />
@@ -54,7 +54,7 @@ export function Hero() {
       <a
         href="#mission"
         aria-label="Scroll to trajectory"
-        className="absolute bottom-7 left-1/2 -translate-x-1/2 text-sub/70 transition hover:text-ink"
+        className="absolute bottom-[max(1.75rem,env(safe-area-inset-bottom))] left-1/2 -translate-x-1/2 text-sub/70 transition hover:text-ink"
       >
         <ChevronDown className="h-6 w-6 animate-bounce" />
       </a>
