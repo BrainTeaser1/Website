@@ -7,6 +7,9 @@ import { DOMAIN_LABEL } from "@/lib/taxonomy";
 import { StatusBadge } from "@/components/ui/badge";
 import { Chip, Tag } from "@/components/ui/chip";
 import { BlueprintFigure } from "@/components/architecture/blueprint-figure";
+import { FinopsFlow } from "@/components/architecture/finops-flow";
+import { AzureTopology } from "@/components/architecture/azure-topology";
+import { MedallionStrip } from "@/components/architecture/medallion-strip";
 import { Prose } from "@/components/content/prose";
 
 export function generateStaticParams() {
@@ -45,13 +48,24 @@ export default function BlueprintPage({ params }: { params: { slug: string } }) 
         <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">{b.title}</h1>
         <p className="mt-5 text-lg leading-relaxed text-sub">{b.summary}</p>
 
-        {/* blueprint panel */}
-        <div className="blueprint relative mt-10 h-56 overflow-hidden rounded-3xl border border-cyan/20">
-          <div className="absolute left-5 top-4 z-10 font-mono text-[11px] text-cyan">topology · {b.maturity}</div>
-          <div className="flex h-full items-center px-6">
-            <BlueprintFigure variant={1} />
+        {/* real diagram per system; stylized figure otherwise */}
+        {b.slug === "finops-orchestration-engine" ? (
+          <div className="mt-10 space-y-5">
+            <FinopsFlow />
+            <MedallionStrip />
           </div>
-        </div>
+        ) : b.slug === "azure-hub-spoke-landing-zone" ? (
+          <div className="mt-10">
+            <AzureTopology />
+          </div>
+        ) : (
+          <div className="blueprint relative mt-10 h-56 overflow-hidden rounded-3xl border border-cyan/20">
+            <div className="absolute left-5 top-4 z-10 font-mono text-[11px] text-cyan">topology · {b.maturity}</div>
+            <div className="flex h-full items-center px-6">
+              <BlueprintFigure variant={1} />
+            </div>
+          </div>
+        )}
 
         {/* layers */}
         <div className="mt-8 flex flex-wrap gap-2">

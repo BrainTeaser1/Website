@@ -44,11 +44,9 @@ export function Reveal({ children, className, index = 0, as = "div", direction =
       x: 0,
       y: 0,
       transition: {
-        type: "spring",
-        stiffness: 90,
-        damping: 20,
-        mass: 0.6,
-        delay: Math.min(index % 6, 5) * 0.07,
+        duration: 0.6,
+        ease: [0.22, 0.61, 0.36, 1],
+        delay: Math.min(index % 6, 5) * 0.08,
       },
     },
   };

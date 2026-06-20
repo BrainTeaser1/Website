@@ -2,7 +2,7 @@ export const site = {
   name: "Krishna Shukla",
   role: "AI & Cloud Engineer",
   tagline: "Building intelligent cloud systems: agentic AI, FinOps, and data platforms.",
-  url: "https://kr1shna-ks.vercel.app",
+  url: "https://kr1shna.xyz",
   email: "krishnashukla3002@gmail.com",
   description:
     "An engineering platform documenting the agentic AI systems, cloud architecture, and data platforms built by Krishna Shukla — AI & Cloud Engineer working across Azure, AWS, and Databricks.",

@@ -63,7 +63,7 @@ export const work: CaseStudy[] = [
     slug: "azure-landing-zone",
     title: "Azure Hub-Spoke Landing Zone",
     summary:
-      "A modular Terraform landing zone for Azure. It builds a hub-spoke network with a central firewall, private DNS, and private endpoints for every data and AI service.",
+      "A modular Terraform landing zone for Azure: a hub-spoke network with a central firewall, private DNS, and four peered VNets where every data and AI service sits behind a private endpoint.",
     domain: ["cloud", "platform", "devops"],
     tags: ["terraform", "azure", "hub-spoke", "private-endpoint", "networking", "iac"],
     role: "Design + implementation",
@@ -75,29 +75,29 @@ export const work: CaseStudy[] = [
     problem:
       "Standing up Azure for AI and analytics by hand tends to produce flat networks, public endpoints, and config that drifts between environments. It's hard to repeat and harder to secure.",
     solution:
-      "About 19 reusable Terraform modules that deploy a hub-spoke topology. The hub holds Azure Firewall and Private DNS zones, the spokes hold the workloads, and services talk over private endpoints with NSGs and route tables between segments.",
+      "~21 reusable Terraform modules that deploy a hub-spoke topology across four VNets. The hub runs Azure Firewall and Private DNS; spokes hold the workloads; everything talks over private endpoints, with NSGs and route tables forcing egress through the firewall.",
     outcome:
-      "A repeatable, segmented Azure foundation where Databricks, Azure OpenAI, Data Factory, Key Vault, Functions, and storage all sit behind private endpoints. A new environment is a config change, not a rebuild.",
-    techStack: ["Terraform", "Azure Firewall", "Private DNS", "VNet Peering", "Databricks", "Azure OpenAI"],
+      "A repeatable, segmented Azure foundation (Central US) where Databricks, Azure OpenAI, Data Factory, Functions, Key Vault, and storage all sit behind private endpoints. A new environment is a config change, not a rebuild.",
+    techStack: ["Terraform", "Azure Firewall", "Private DNS", "VNet Peering", "Databricks", "Azure OpenAI", "Data Factory"],
     metrics: [
-      { label: "Modules", value: "~19" },
-      { label: "Topology", value: "hub-spoke" },
+      { label: "Modules", value: "~21" },
+      { label: "VNets", value: "4 · peered" },
       { label: "Endpoints", value: "private" },
     ],
     architectureRef: "azure-hub-spoke-landing-zone",
     links: { repo: "https://github.com/Brainteaser1/azure-infra-terraform" },
     sections: [
       {
-        heading: "Network design",
-        body: "A hub VNet centralizes Azure Firewall and Private DNS zones. Spoke VNets hold the workloads and peer back to the hub. Separate VNets isolate browser authentication and sandbox testing, so traffic stays segmented.",
+        heading: "Four VNets, one hub",
+        body: "A hub VNet (10.0.0.0/16) centralizes Azure Firewall and Private DNS. Three spokes peer back to it: workloads (10.1.0.0/16), an isolated Databricks browser-auth network (10.2.0.0/16), and a sandbox (10.3.0.0/16). Peering is hub-to-each-spoke, so spokes never talk directly.",
       },
       {
         heading: "Private by default",
-        body: "Databricks, Azure OpenAI, Data Factory, Key Vault, Functions, and ADLS connect through private endpoints with matching Private DNS zones. NSGs and route tables control what can talk to what.",
+        body: "Databricks (with its access connector to ADLS), Azure OpenAI, Data Factory and its self-hosted integration runtime, Functions, Key Vault, and storage all connect through private endpoints with matching Private DNS zones. NSGs and route tables push egress through the hub firewall — nothing is exposed publicly by default.",
       },
       {
         heading: "Modular IaC",
-        body: "Roughly 19 modules cover VNets, subnets, private endpoints, Databricks workspaces, Key Vault, Data Factory, Function Apps, storage, firewall, NSGs, and peering. Composing them is how a new environment gets built.",
+        body: "~21 single-purpose modules — vnet, subnets, peering, firewall, nsg, route tables, private endpoints, private DNS zones, Databricks workspaces, access connector, Data Factory, SHIR, Functions, Key Vault, storage — composed in one root. Standing up a new environment is wiring modules, not copy-paste.",
       },
     ],
   },

@@ -114,9 +114,6 @@ export function SiteNav() {
               <Search className="h-3.5 w-3.5" />
               <span className="font-mono">⌘K</span>
             </button>
-            <span className="hidden items-center gap-2 font-mono text-[11px] text-sub xl:inline-flex">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan" /> Available
-            </span>
             <LiquidButton asChild size="md" className="hidden sm:inline-flex">
               <Link href="/contact">Get in touch</Link>
             </LiquidButton>

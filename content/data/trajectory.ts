@@ -3,6 +3,7 @@ export type StageStatus = "done" | "ongoing" | "next" | "goal";
 export interface StageCard {
   title: string;
   body: string;
+  tags?: string[];
 }
 
 export interface Stage {
@@ -18,7 +19,7 @@ export const trajectory: Stage[] = [
     key: "software-eng",
     label: "Software Eng",
     status: "done",
-    statusLabel: "FOUNDATION",
+    statusLabel: "WHERE I STARTED",
     cards: [
       {
         title: "CS fundamentals",
@@ -38,19 +39,22 @@ export const trajectory: Stage[] = [
     key: "ai-cloud-eng",
     label: "AI & Cloud Eng",
     status: "ongoing",
-    statusLabel: "ONGOING",
+    statusLabel: "WHERE I AM NOW",
     cards: [
       {
         title: "FinOps Hub",
-        body: "Building an agent that turns plain-English cloud-cost questions into validated SQL over Databricks, with a streaming UI.",
+        body: "An agent that turns plain-English cloud-cost questions into validated SQL over Databricks. The problem I'm chasing: let anyone interrogate spend without writing SQL.",
+        tags: ["FastAPI", "Azure OpenAI", "Databricks", "Next.js"],
       },
       {
         title: "Cloud infrastructure",
-        body: "Provisioning Azure and AWS from Terraform — hub-spoke networks, private endpoints, and CI/CD with Azure DevOps.",
+        body: "Provisioning Azure and AWS from Terraform — hub-spoke networks, private endpoints, everything reproducible from code.",
+        tags: ["Terraform", "Azure", "AWS"],
       },
       {
         title: "Data platforms",
         body: "A bronze–silver–gold Databricks warehouse feeding cost attribution, anomaly detection, and reporting.",
+        tags: ["Databricks", "Delta Lake", "ADF"],
       },
     ],
   },
@@ -58,7 +62,7 @@ export const trajectory: Stage[] = [
     key: "agentic-systems",
     label: "Agentic Systems",
     status: "next",
-    statusLabel: "NEXT",
+    statusLabel: "LEARNING NEXT",
     cards: [
       {
         title: "Multi-agent orchestration",
@@ -78,7 +82,7 @@ export const trajectory: Stage[] = [
     key: "platform-data",
     label: "Platform & Data",
     status: "next",
-    statusLabel: "NEXT",
+    statusLabel: "LEARNING NEXT",
     cards: [
       {
         title: "Self-serve platforms",
@@ -98,7 +102,7 @@ export const trajectory: Stage[] = [
     key: "architect",
     label: "Cloud & AI Architect",
     status: "goal",
-    statusLabel: "THE GOAL",
+    statusLabel: "WHERE I'M HEADED",
     cards: [
       {
         title: "End-to-end ownership",

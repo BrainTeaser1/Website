@@ -19,9 +19,9 @@ export function Footer() {
               {item.label}
             </Link>
           ))}
-          <Link href="#top" className="transition hover:text-ink">
+          <a href="#top" className="transition hover:text-ink">
             Back to top ↑
-          </Link>
+          </a>
         </nav>
       </div>
     </footer>

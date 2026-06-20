@@ -17,6 +17,7 @@
   --cyan: 34 211 238;       /* #22d3ee */
   --ink: 231 234 243;       /* #e7eaf3 */
   --sub: 139 147 173;       /* #8b93ad */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 html {
@@ -37,6 +38,11 @@ body {
     outline: none;
     box-shadow: 0 0 0 2px rgb(var(--base)), 0 0 0 4px rgb(var(--accent) / 0.8);
     border-radius: 6px;
+  }
+  /* in-page jumps (hero scroll-cue, anchors) clear the fixed nav */
+  section[id],
+  [id] {
+    scroll-margin-top: 90px;
   }
 }
 
@@ -81,7 +87,7 @@ body {
     border: 1px solid rgb(120 130 180 / 0.12);
   }
   .card-hover {
-    transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), border-color 0.4s, box-shadow 0.4s;
+    transition: transform 0.35s var(--ease), border-color 0.35s var(--ease), box-shadow 0.35s var(--ease);
   }
   .card-hover:hover {
     transform: translateY(-6px);
@@ -105,7 +111,7 @@ body {
     font-weight: 600;
     cursor: pointer;
     white-space: nowrap;
-    transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.3s, box-shadow 0.3s;
+    transition: transform 0.3s var(--ease), filter 0.3s var(--ease), box-shadow 0.3s var(--ease);
     backdrop-filter: blur(4px) saturate(1.5);
     -webkit-backdrop-filter: blur(4px) saturate(1.5);
     box-shadow:
@@ -310,3 +316,28 @@ body {
 @keyframes orbspin { to { transform: rotate(360deg); } }
 .orb-ring { animation: orbspin 42s linear infinite; }
 .orb-ring-rev { animation: orbspin 30s linear infinite reverse; }
+
+/* ===================== SHIMMER TEXT (subtle moving gradient) ===================== */
+.shimmer-text {
+  background: linear-gradient(110deg, #3b6fff 0%, #a855f7 25%, #22d3ee 50%, #a855f7 75%, #3b6fff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 7s linear infinite;
+}
+@keyframes shimmer { to { background-position: 200% center; } }
+
+/* ===================== AURORA ===================== */
+@keyframes aurora-drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(6%, -4%) scale(1.08); }
+  66%  { transform: translate(-5%, 5%) scale(0.96); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+.aurora-blob { animation: aurora-drift 22s ease-in-out infinite; will-change: transform; }
+
+@media (prefers-reduced-motion: reduce) {
+  .shimmer-text { animation: none !important; }
+  .aurora-blob { animation: none !important; }
+}

@@ -90,12 +90,19 @@ export function TrajectoryStepper() {
           className="grid gap-5 md:grid-cols-3"
         >
           {stage.cards.map((c) => (
-            <div key={c.title} className="card card-hover h-full rounded-2xl p-7">
+            <div key={c.title} className="card card-hover flex h-full flex-col rounded-2xl p-7">
               <div className="mb-3 font-mono text-[11px] uppercase tracking-wider text-accent">
-                {stage.label}
+                {stage.statusLabel}
               </div>
               <h3 className="mb-2 text-lg font-bold">{c.title}</h3>
-              <p className="text-[15px] leading-relaxed text-sub">{c.body}</p>
+              <p className="flex-1 text-[15px] leading-relaxed text-sub">{c.body}</p>
+              {c.tags && (
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {c.tags.map((t) => (
+                    <span key={t} className="chip rounded px-2 py-0.5 font-mono text-[10px] text-sub">{t}</span>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </motion.div>

@@ -19,7 +19,7 @@ export const skillDomains: SkillDomain[] = [
     label: "Cloud",
     caption: "PLATFORMS",
     color: "#3b6fff",
-    items: ["Microsoft Azure", "AWS", "Azure Databricks"],
+    items: ["Microsoft Azure", "AWS"],
   },
   {
     key: "devops",
@@ -39,15 +39,15 @@ export const skillDomains: SkillDomain[] = [
 
 export const principles = [
   {
-    title: "Reliability comes from structure",
-    body: "I build AI systems as a set of checkable steps, so the pipeline decides whether an answer is correct. That way I'm not betting on one prompt to get it right.",
+    title: "How does this actually work?",
+    body: "I want to know how a system behaves underneath before I trust it, so I dig until the black boxes aren't black anymore. Most of my projects start as that one question.",
   },
   {
-    title: "Treat infrastructure as a product",
-    body: "I provision things with Terraform, ship them through CI/CD, and make them observable. The next engineer can read it and rebuild it, not just run it on my machine.",
+    title: "Build it, break it, fix it",
+    body: "I learn a thing by building it, breaking it, and fixing it. Implementation over theory, every time — tutorials never taught me as much as a system falling over did.",
   },
   {
-    title: "I learn by shipping",
-    body: "Real systems teach more than tutorials do. I deploy something, watch how it behaves, and fix what breaks. That loop is how the projects here got built.",
+    title: "Infrastructure is a product",
+    body: "I provision with Terraform, ship through CI/CD, and keep it observable, so the next person can read it and build on it instead of guessing how it runs.",
   },
 ];
