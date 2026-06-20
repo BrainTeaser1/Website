@@ -99,7 +99,7 @@ export function Sparkles({
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fillStyle = p.c;
-        ctx.shadowBlur = (isMobile ? 3 : 6) * dpr;
+        ctx.shadowBlur = (isMobile ? 3 : 4) * dpr;
         ctx.shadowColor = p.c;
         ctx.fill();
       }

@@ -15,9 +15,10 @@ export function GlobalBackground() {
       <DeferredLayer>
         <DottedSurface className="-z-10 opacity-[0.55]" />
       </DeferredLayer>
-      {/* faint architectural grid */}
+      {/* faint architectural grid — static (animating background-position repainted
+          the whole full-viewport layer every frame for a barely-visible 40s pan) */}
       <div
-        className="absolute inset-0 animate-gridpan"
+        className="absolute inset-0"
         style={{
           backgroundImage:
             "linear-gradient(to right, rgb(120 130 180 / 0.04) 1px, transparent 1px), linear-gradient(to bottom, rgb(120 130 180 / 0.04) 1px, transparent 1px)",
@@ -33,7 +34,7 @@ export function GlobalBackground() {
       <div className="glow absolute top-[185%] left-[38%] h-[460px] w-[560px] rounded-full bg-accent2/12" />
       {/* sparkles — lightened so it complements rather than competes with the 3D layer */}
       <DeferredLayer>
-        <Sparkles className="absolute inset-0 h-full w-full" divisor={9000} cap={200} maxR={1.2} />
+        <Sparkles className="absolute inset-0 h-full w-full" divisor={11000} cap={140} maxR={1.2} />
       </DeferredLayer>
     </div>
   );

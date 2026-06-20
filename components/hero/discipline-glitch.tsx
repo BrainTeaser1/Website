@@ -1,15 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 /**
  * DisciplineGlitch — the hero accent line. Cycles the disciplines Krishna builds
- * across, with a *controlled* glitch: a faint continuous idle shimmer plus a brief,
- * subtle chromatic burst on each word swap. Text stays fully readable at all times.
+ * across with a controlled chromatic *burst* on each word swap, then sits still.
  * Intent: "disciplines shifting and evolving" — not a hacker/cyberpunk glitch.
- * Reduced motion → plain opacity crossfade, no transforms, no chromatic layers.
+ *
+ * Perf: the burst happens only on a swap (every ~2.5s); between swaps there is
+ * zero per-frame work. No mix-blend / no perpetual idle tween (those forced a
+ * constant blended recomposite over the live hero backdrop). Cycling pauses when
+ * the hero scrolls out of view. Reduced motion → plain opacity crossfade.
  */
 
 const DISCIPLINES = ["Cloud Platforms", "Data Systems", "Agentic Systems", "Machine Learning"];
@@ -24,18 +27,31 @@ export function DisciplineGlitch({
   className?: string;
 }) {
   const reduce = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
   const [i, setI] = useState(0);
+  const [inView, setInView] = useState(true);
+
+  // Only cycle while visible — costs nothing once scrolled past the hero.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold: 0 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   useEffect(() => {
+    if (!inView) return;
     const id = setInterval(() => setI((p) => (p + 1) % words.length), INTERVAL);
     return () => clearInterval(id);
-  }, [words.length]);
+  }, [inView, words.length]);
 
   const word = words[i];
 
   if (reduce) {
     return (
       <div
+        ref={ref}
         className={cn("relative flex h-12 items-center justify-center sm:h-14", className)}
         aria-label={words.join(", ")}
       >
@@ -57,6 +73,7 @@ export function DisciplineGlitch({
 
   return (
     <div
+      ref={ref}
       className={cn("relative flex h-12 select-none items-center justify-center sm:h-14", className)}
       aria-label={words.join(", ")}
     >
@@ -70,22 +87,15 @@ export function DisciplineGlitch({
           transition={{ duration: 0.28, ease: "easeOut" }}
         >
           <span className="relative inline-flex items-center justify-center">
-            {/* royal-blue ghost — settles in from the left, then drifts ≤1px */}
-            <Ghost color="#3b6fff" burst={-4} idleX={[-1, 0.4, -0.7, -1]} idleY={[0, 0.4, -0.3, 0]}>
+            {/* chromatic ghosts: separate on entry, then settle and hold (no perpetual motion) */}
+            <Ghost color="#3b6fff" burst={-4}>
               {word}
             </Ghost>
-            {/* violet ghost — mirror of the blue */}
-            <Ghost color="#a855f7" burst={4} idleX={[1, -0.4, 0.7, 1]} idleY={[0, -0.4, 0.3, 0]}>
+            <Ghost color="#a855f7" burst={4}>
               {word}
             </Ghost>
-            {/* main readable layer (painted last = on top) with its own faint idle drift */}
-            <motion.span
-              className={cn(SIZE, "accent-gradient relative")}
-              animate={{ x: [0, 0.4, -0.3, 0], y: [0, -0.2, 0.2, 0] }}
-              transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
-            >
-              {word}
-            </motion.span>
+            {/* main readable layer (painted last = on top) — static between swaps */}
+            <span className={cn(SIZE, "accent-gradient relative")}>{word}</span>
           </span>
         </motion.div>
       </AnimatePresence>
@@ -93,35 +103,17 @@ export function DisciplineGlitch({
   );
 }
 
-function Ghost({
-  color,
-  burst,
-  idleX,
-  idleY,
-  children,
-}: {
-  color: string;
-  burst: number;
-  idleX: number[];
-  idleY: number[];
-  children: React.ReactNode;
-}) {
+function Ghost({ color, burst, children }: { color: string; burst: number; children: React.ReactNode }) {
   return (
     <motion.span
       aria-hidden
-      className="absolute inset-0 flex items-center justify-center mix-blend-screen"
+      className={cn(SIZE, "absolute inset-0 flex items-center justify-center")}
       style={{ color }}
       initial={{ x: burst, opacity: 0 }}
-      animate={{ x: 0, opacity: 0.3 }}
+      animate={{ x: 0, opacity: 0.28 }}
       transition={{ duration: 0.36, ease: "easeOut" }}
     >
-      <motion.span
-        className={SIZE}
-        animate={{ x: idleX, y: idleY }}
-        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
-      >
-        {children}
-      </motion.span>
+      {children}
     </motion.span>
   );
 }
