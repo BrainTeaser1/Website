@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { site } from "@/lib/site";
@@ -27,6 +27,13 @@ export const metadata: Metadata = {
   },
   twitter: { card: "summary_large_image" },
   robots: { index: true, follow: true },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover", // extend under iOS notch / Dynamic Island; enables env(safe-area-inset-*)
+  themeColor: "#050a16", // matches --base so the mobile browser chrome blends with the page
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

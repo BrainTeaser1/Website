@@ -23,11 +23,14 @@
 html {
   background: rgb(var(--base));
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%; /* lock font scaling on iOS landscape rotation */
+  text-size-adjust: 100%;
 }
 body {
   background: transparent;
   color: rgb(var(--ink));
   -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent; /* no gray tap flash on the dark theme */
 }
 ::selection {
   background: rgba(44, 70, 230, 0.35);
@@ -51,7 +54,8 @@ body {
   .container-page {
     max-width: 80rem;
     margin-inline: auto;
-    padding-inline: 1.5rem;
+    /* safe-area aware so content never hides under a landscape notch */
+    padding-inline: max(1.5rem, env(safe-area-inset-left)) max(1.5rem, env(safe-area-inset-right));
   }
 
   /* ---- grid & glows ---- */
@@ -67,6 +71,15 @@ body {
   }
   .glow {
     filter: blur(90px);
+  }
+  /* lighter full-screen blur composite on phones (static layers) */
+  @media (max-width: 767px) {
+    .glow {
+      filter: blur(60px);
+    }
+    .aurora-blob {
+      filter: blur(42px) !important;
+    }
   }
   .text-gradient {
     background: linear-gradient(120deg, #fff 0%, #8da8ff 42%, #a855f7 100%);
