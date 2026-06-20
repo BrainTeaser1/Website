@@ -3,7 +3,7 @@ import { ChevronDown } from "lucide-react";
 import { Reveal } from "@/components/effects/reveal";
 import { LiquidButton } from "@/components/ui/liquid-button";
 import { Socials } from "@/components/ui/socials";
-import { ParticleWords } from "@/components/hero/particle-name";
+import { DisciplineGlitch } from "@/components/hero/discipline-glitch";
 import { Aurora } from "@/components/effects/aurora";
 
 export function Hero() {
@@ -22,7 +22,7 @@ export function Hero() {
           </Reveal>
 
           <Reveal index={2}>
-            <ParticleWords className="mx-auto mt-4 max-w-xl" />
+            <DisciplineGlitch className="mx-auto mt-4 max-w-xl" />
           </Reveal>
 
           <Reveal index={3}>
