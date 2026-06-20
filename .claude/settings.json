@@ -3,7 +3,8 @@
     "allow": [
       "Bash(taskkill //F //IM node.exe)",
       "Bash(ls node_modules/three)",
-      "Bash(ls node_modules/@types/three)"
+      "Bash(ls node_modules/@types/three)",
+      "Bash(export NODE_PATH=\"c:/Users/KrishnaShukla/Desktop/Website/node_modules\")"
     ]
   }
 }

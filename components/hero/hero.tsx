@@ -27,7 +27,7 @@ export function Hero() {
 
           <Reveal index={3}>
             <p className="mx-auto mt-5 max-w-2xl text-xl font-medium leading-snug text-ink/90 sm:text-2xl">
-              Building <span className="shimmer-text font-semibold">cloud, AI, and data systems</span> while
+              Building <span className="shimmer-text font-semibold">Cloud, AI, and Data Systems</span> while
               figuring out how they actually work.
             </p>
           </Reveal>
