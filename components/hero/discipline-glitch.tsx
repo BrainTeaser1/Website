@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils";
  */
 
 const DISCIPLINES = ["Cloud Platforms", "Data Systems", "Agentic Systems", "Machine Learning"];
-const INTERVAL = 2500;
+const INTERVAL = 3600;
 const SIZE = "text-3xl font-bold tracking-tight sm:text-4xl";
 
 export function DisciplineGlitch({

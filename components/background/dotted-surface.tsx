@@ -93,10 +93,12 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
       renderer.render(scene, camera);
     };
 
-    // ~30fps cap on mobile (skip alternate frames); count steps faster so the
-    // wave travels at the same visual speed despite fewer frames.
-    const minDelta = isMobile ? 1000 / 30 : 0;
-    const step = isMobile ? 0.2 : 0.1;
+    // Cap the wave's frame rate (30fps mobile, 40fps desktop) to leave the hero
+    // compositor headroom — full 60fps WebGL left no slack, so periodic events
+    // (e.g. the discipline-cycler swap) dropped frames. `count` steps faster so
+    // the wave travels at the same visual speed despite fewer frames.
+    const minDelta = isMobile ? 1000 / 30 : 1000 / 40;
+    const step = isMobile ? 0.2 : 0.15;
     let lastT = 0;
     const animate = (t = 0) => {
       animationId = requestAnimationFrame(animate);
