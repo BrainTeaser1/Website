@@ -7,6 +7,8 @@ export function AzureTopology() {
   return (
     <div className="blueprint relative overflow-hidden rounded-3xl border border-cyan/20">
       <div className="absolute left-5 top-4 z-10 font-mono text-[11px] text-cyan">NETWORK TOPOLOGY · hub-spoke · Central US</div>
+      <div className="overflow-x-auto">
+      <div className="min-w-[680px]">
       <svg viewBox="0 0 780 600" className="relative mt-2 h-auto w-full" fontFamily="var(--font-mono), monospace" role="img" aria-label="Azure hub-spoke landing zone: a firewall and private DNS hub peered to spoke, browser-auth, and sandbox VNets, with services behind private endpoints">
         <defs>
           <linearGradient id="az1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#2c46e6" /><stop offset="1" stopColor="#a855f7" /></linearGradient>
@@ -76,6 +78,9 @@ export function AzureTopology() {
         <circle r="3" fill="#22d3ee" className="data-dot" style={{ offsetPath: "path('M390 96 L300 150')" } as React.CSSProperties} />
         <circle r="3" fill="#3b6fff" className="data-dot" style={{ offsetPath: "path('M470 70 L600 150')", animationDelay: "1.3s" } as React.CSSProperties} />
       </svg>
+      </div>
+      </div>
+      <p className="px-5 pb-3 text-center font-mono text-[10px] text-sub/70 sm:hidden">← swipe to explore →</p>
     </div>
   );
 }

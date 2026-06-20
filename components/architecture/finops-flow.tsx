@@ -27,6 +27,8 @@ export function FinopsFlow() {
         </div>
       </div>
 
+      <div className="overflow-x-auto">
+      <div className="min-w-[560px]">
       <svg viewBox="0 0 680 1240" className="w-full" fontFamily="var(--font-mono), monospace" role="img" aria-label="FinOps Hub agent decision flow from user question to final answer">
         <defs>
           <linearGradient id="fg1" x1="0" y1="0" x2="1" y2="1">
@@ -104,6 +106,9 @@ export function FinopsFlow() {
         <circle r="3" fill={C.dec} className="data-dot" style={{ offsetPath: "path('M340 200 L340 246')" } as React.CSSProperties} />
         <circle r="3" fill={C.sql} className="data-dot" style={{ offsetPath: "path('M340 452 L340 498')", animationDelay: "1.2s" } as React.CSSProperties} />
       </svg>
+      </div>
+      </div>
+      <p className="px-5 pb-3 text-center font-mono text-[10px] text-sub/70 sm:hidden">← swipe to explore →</p>
     </div>
   );
 }
