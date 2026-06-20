@@ -342,11 +342,13 @@ body {
 @keyframes shimmer { to { background-position: 200% center; } }
 
 /* ===================== AURORA ===================== */
+/* translate-only: scaling a blurred layer forces a full re-raster of the blur
+   every frame (the hero's main lag source). Pure translate is a cheap GPU move. */
 @keyframes aurora-drift {
-  0%   { transform: translate(0, 0) scale(1); }
-  33%  { transform: translate(6%, -4%) scale(1.08); }
-  66%  { transform: translate(-5%, 5%) scale(0.96); }
-  100% { transform: translate(0, 0) scale(1); }
+  0%   { transform: translate(0, 0); }
+  33%  { transform: translate(6%, -4%); }
+  66%  { transform: translate(-5%, 5%); }
+  100% { transform: translate(0, 0); }
 }
 .aurora-blob { animation: aurora-drift 22s ease-in-out infinite; will-change: transform; }
 
