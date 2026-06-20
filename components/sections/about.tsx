@@ -1,12 +1,7 @@
 import { Section, Eyebrow } from "@/components/primitives/section";
 import { Reveal } from "@/components/effects/reveal";
 import { principles } from "@/content/data/skills";
-
-const stats = [
-  { value: "8.8", label: "B.Tech CGPA" },
-  { value: "3", label: "Clouds" },
-  { value: "Agentic", label: "AI Focus" },
-];
+import { currentlyExploring, exploringAsOf } from "@/content/data/exploring";
 
 export function About() {
   return (
@@ -27,13 +22,23 @@ export function About() {
                 <div className="font-mono text-sm text-sub">AI &amp; Cloud Engineer</div>
               </div>
             </div>
-            <div className="mt-6 grid grid-cols-3 gap-3 text-center">
-              {stats.map((s) => (
-                <div key={s.label}>
-                  <div className="accent-gradient text-2xl font-bold">{s.value}</div>
-                  <div className="mt-1 font-mono text-[11px] uppercase tracking-wider text-sub">{s.label}</div>
-                </div>
-              ))}
+            <div className="mt-6 border-t border-line/60 pt-5">
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="font-mono text-[11px] uppercase tracking-wider text-accent">
+                  Currently exploring
+                </span>
+                <span className="font-mono text-[10px] uppercase tracking-wider text-sub/70">
+                  {exploringAsOf}
+                </span>
+              </div>
+              <ul className="mt-3 space-y-2">
+                {currentlyExploring.map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-sm text-ink/90">
+                    <span className="mt-1.5 h-1.5 w-1.5 flex-none rounded-full bg-gradient-to-br from-accent to-violet" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </Reveal>

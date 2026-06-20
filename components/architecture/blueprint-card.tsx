@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Blueprint } from "@/content/types";
 import { StatusBadge } from "@/components/ui/badge";
 import { Tag } from "@/components/ui/chip";
-import { BlueprintFigure } from "@/components/architecture/blueprint-figure";
+import { BlueprintCardFigure } from "@/components/architecture/blueprint-card-figure";
 
 export function BlueprintCard({ blueprint, variant = 0 }: { blueprint: Blueprint; variant?: number }) {
   return (
@@ -11,7 +11,7 @@ export function BlueprintCard({ blueprint, variant = 0 }: { blueprint: Blueprint
       className="card card-hover group flex flex-col overflow-hidden rounded-3xl"
     >
       <div className="blueprint relative h-32 overflow-hidden border-b border-line/60">
-        <BlueprintFigure variant={variant} />
+        <BlueprintCardFigure slug={blueprint.slug} variant={variant} />
       </div>
       <div className="flex flex-1 flex-col p-6">
         <div className="mb-2 flex items-center justify-between">

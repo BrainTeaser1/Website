@@ -15,15 +15,19 @@ const ICONS: Record<string, LucideIcon> = {
 };
 
 function nodeClasses(status: StageStatus, selected: boolean) {
-  const base =
-    status === "ongoing"
-      ? "bg-gradient-to-br from-accent to-violet text-white timeline-dot"
-      : status === "done"
-        ? "border border-cyan/40 bg-surface2 text-cyan timeline-dot"
-        : status === "goal"
-          ? "border border-violet/40 bg-surface2 text-violet"
-          : "border border-line bg-surface2 text-sub";
-  return cn(base, selected && "ring-2 ring-accent/70 ring-offset-2 ring-offset-base scale-110");
+  // The active treatment follows the *selection*, not the stage status — so the
+  // glow moves with whichever node the visitor picks, instead of staying on the
+  // "ongoing" stage. Unselected nodes stay neutral, lightly tinted by status.
+  if (selected) {
+    return "bg-gradient-to-br from-accent to-violet text-white timeline-dot shadow-lg shadow-accent/25 ring-2 ring-accent/70 ring-offset-2 ring-offset-base scale-110";
+  }
+  const neutral: Record<StageStatus, string> = {
+    done: "border border-cyan/30 bg-surface2 text-cyan/80",
+    ongoing: "border border-accent/30 bg-surface2 text-accent/80",
+    goal: "border border-violet/30 bg-surface2 text-violet/80",
+    next: "border border-line bg-surface2 text-sub",
+  };
+  return neutral[status];
 }
 
 export function TrajectoryStepper() {
